@@ -1,0 +1,9 @@
+env/
+__pycache__
+train_data/
+data/
+old_train
+*.jpg
+.env
+log_file.txt
+local_testing.py
