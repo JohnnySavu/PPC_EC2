@@ -52,6 +52,9 @@ class NeuralNetwork():
             s3bucket.upload_file(NeuralNetwork.LOCAL_MODEL_PATH, NeuralNetwork.BUCKET_FOLDER_PATH, NeuralNetwork.BUCKET_MODEL_NAME)
 
     def load_model(self, s3bucket):
+        if os.path.exists(NeuralNetwork.LOCAL_MODEL_PATH):
+            self.model.load_state_dict(torch.load(NeuralNetwork.LOCAL_MODEL_PATH))
+
         if s3bucket is not None:
             s3bucket.download_file(os.path.join(NeuralNetwork.BUCKET_FOLDER_PATH, NeuralNetwork.BUCKET_MODEL_NAME), "./data", "model.pth")
             if os.path.exists(NeuralNetwork.LOCAL_MODEL_PATH):
@@ -59,7 +62,6 @@ class NeuralNetwork():
 
     def predict(self, image):
         #preprocess image 
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = Image.fromarray(image)
         self.model.eval()
         image = self.data_transformations['test'](image).unsqueeze(0)

@@ -7,3 +7,4 @@ old_train
 .env
 log_file.txt
 local_testing.py
+test.py
