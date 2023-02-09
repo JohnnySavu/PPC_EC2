@@ -44,9 +44,13 @@ trains the latest model and saves it in s3 bucket
 '''
 @app.route("/train", methods = ['PUT'])
 def train():
-    nn = NeuralNetwork()
-    nn.train(bucket_storage)
-    return create_response("ok", 200)
+    try:
+        nn = NeuralNetwork()
+        loss = nn.train(bucket_storage)
+        return create_response(f"Loss for the training is : {loss}", 200)
+    except Exception as e:
+        logging.exception(e)
+        return create_response(f"Error", 500)
 
 '''
 adds a new image for training the model 

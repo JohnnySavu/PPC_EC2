@@ -102,6 +102,8 @@ class NeuralNetwork():
 
         self.save_model(s3bucket, np.array(actual_loss_item).mean())
 
+        return np.array(actual_loss_item).mean()
+
 def unit_tests():
     nn = NeuralNetwork()
 
